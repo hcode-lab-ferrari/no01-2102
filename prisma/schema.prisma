@@ -14,13 +14,14 @@ model migrations {
 }
 
 model Person {
-  id        Int       @id @default(autoincrement())
-  name      String    @db.VarChar(250)
-  birthAt   DateTime? @db.Date
-  phone     String?   @db.VarChar(16)
-  document  String?   @db.VarChar(14)
-  createdAt DateTime  @default(now()) @db.DateTime(0)
-  updatedAt DateTime  @default(now()) @db.DateTime(0)
+  id        Int        @id @default(autoincrement())
+  name      String     @db.VarChar(250)
+  birthAt   DateTime?  @db.Date
+  phone     String?    @db.VarChar(16)
+  document  String?    @db.VarChar(14)
+  createdAt DateTime   @default(now()) @db.DateTime(0)
+  updatedAt DateTime   @default(now()) @db.DateTime(0)
+  Contact   Contact[] @relation("contactsTopersons")
   User      User[]
 
   @@map("persons")
@@ -52,4 +53,17 @@ model PasswordRecovery {
 
   @@index([userId], map: "FK_password_recoveries_users")
   @@map("password_recoveries")
+}
+
+model Contact {
+  id        Int      @id @default(autoincrement())
+  personId  Int
+  email     String   @db.VarChar(250)
+  message   String   @db.Text
+  createdAt DateTime @default(now()) @db.DateTime(0)
+  updatedAt DateTime @default(now()) @db.DateTime(0)
+  persons   Person   @relation("contactsTopersons", fields: [personId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_contacts_persons")
+
+  @@index([personId], map: "FK_contacts_persons")
+  @@map("contacts")
 }
