@@ -1,3 +1,4 @@
+import { ContactModule } from './contact/contact.module';
 import { MailModule } from './mail/mail.module';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
@@ -6,7 +7,8 @@ import { AppController } from './app.controller';
 import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
-  imports: [MailModule, AuthModule, UserModule, PrismaModule],
+  imports: [
+    ContactModule, MailModule, AuthModule, UserModule, PrismaModule],
   controllers: [AppController],
   providers: [],
 })
