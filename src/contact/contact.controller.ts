@@ -1,10 +1,17 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Post } from '@nestjs/common';
 import { ContactService } from './contact.service';
 
 @Controller('contacts')
 export class ContactController {
 
     constructor(private contactService: ContactService) {}
+
+    @Get(':id')
+    async show(@Param('id') id) {
+
+        return this.contactService.get(Number(id));
+
+    }
 
     @Get()
     async list() {
@@ -25,6 +32,14 @@ export class ContactController {
             name,
             email
         });
+
+    }
+
+    @Delete(':id')
+    @HttpCode(204)
+    async delete(@Param('id') id) {
+
+        await this.contactService.delete(Number(id));
 
     }
 

@@ -77,3 +77,12 @@ model TimeOption {
 
   @@map("time_options")
 }
+
+model services {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(45)
+  description String   @db.MediumText
+  price       Decimal  @db.Decimal(10, 2)
+  createdAt   DateTime @default(now()) @db.DateTime(0)
+  updatedAt   DateTime @default(now()) @db.DateTime(0)
+}

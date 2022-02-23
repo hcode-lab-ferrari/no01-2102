@@ -1,10 +1,27 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { NotFoundError } from 'rxjs';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class ContactService {
 
     constructor(private db: PrismaService) {}
+
+    async get(id: number) {
+
+        id = Number(id);
+
+        if (isNaN(id)) {
+            throw new BadRequestException("ID is not a number");
+        }
+
+        return this.db.contact.findUnique({
+            where: {
+                id,
+            }
+        });
+
+    }
 
     async list() {
 
@@ -73,6 +90,26 @@ export class ContactService {
                 email,
                 message,
             },
+        });
+
+    }
+
+    async delete(id: number) {
+
+        id = Number(id);
+
+        if (isNaN(id)) {
+            throw new BadRequestException("Id is invalid");
+        }
+
+        if (!await this.get(id)) {
+            throw new NotFoundException("ID not exists");
+        }
+        
+        return this.db.contact.delete({
+            where: {
+                id,
+            }
         });
 
     }
