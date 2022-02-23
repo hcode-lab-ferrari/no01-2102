@@ -6,6 +6,12 @@ export class ContactService {
 
     constructor(private db: PrismaService) {}
 
+    async list() {
+
+        return this.db.contact.findMany();
+
+    }
+
     async create({
         name,
         email,
@@ -24,7 +30,7 @@ export class ContactService {
             throw new BadRequestException("A mensagem é obrigatória.");
         }
 
-        let personId;
+        let personId: number;
 
         const user = await this.db.user.findUnique({
             where: {
@@ -39,13 +45,25 @@ export class ContactService {
             personId = Number(user.personId);
         } else {
 
-            const person = await this.db.person.create({
-                data: {
-                    name,
+            const contact = await this.db.contact.findFirst({
+                where: {
+                    email,
                 },
             });
 
-            personId = Number(person.id);
+            if (contact) {
+                personId = Number(contact.personId);
+            } else {
+
+                const newPerson = await this.db.person.create({
+                    data: {
+                        name,
+                    },
+                });
+    
+                personId = Number(newPerson.id);
+
+            }
 
         }
 

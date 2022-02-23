@@ -14,13 +14,13 @@ model migrations {
 }
 
 model Person {
-  id        Int        @id @default(autoincrement())
-  name      String     @db.VarChar(250)
-  birthAt   DateTime?  @db.Date
-  phone     String?    @db.VarChar(16)
-  document  String?    @db.VarChar(14)
-  createdAt DateTime   @default(now()) @db.DateTime(0)
-  updatedAt DateTime   @default(now()) @db.DateTime(0)
+  id        Int       @id @default(autoincrement())
+  name      String    @db.VarChar(250)
+  birthAt   DateTime? @db.Date
+  phone     String?   @db.VarChar(16)
+  document  String?   @db.VarChar(14)
+  createdAt DateTime  @default(now()) @db.DateTime(0)
+  updatedAt DateTime  @default(now()) @db.DateTime(0)
   Contact   Contact[] @relation("contactsTopersons")
   User      User[]
 
@@ -66,4 +66,14 @@ model Contact {
 
   @@index([personId], map: "FK_contacts_persons")
   @@map("contacts")
+}
+
+model TimeOption {
+  id        Int      @id @default(autoincrement())
+  day       Int      @db.TinyInt
+  time      DateTime @db.Time(0)
+  createdAt DateTime @default(now()) @db.DateTime(0)
+  updatedAt DateTime @default(now()) @db.DateTime(0)
+
+  @@map("time_options")
 }

@@ -1,3 +1,4 @@
+import { TimeOptionModule } from './time-option/time-option.module';
 import { ContactModule } from './contact/contact.module';
 import { MailModule } from './mail/mail.module';
 import { AuthModule } from './auth/auth.module';
@@ -8,7 +9,13 @@ import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
-    ContactModule, MailModule, AuthModule, UserModule, PrismaModule],
+    TimeOptionModule,
+    ContactModule,
+    MailModule,
+    AuthModule,
+    UserModule,
+    PrismaModule,
+  ],
   controllers: [AppController],
   providers: [],
 })

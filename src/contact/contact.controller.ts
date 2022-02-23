@@ -1,10 +1,17 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ContactService } from './contact.service';
 
 @Controller('contacts')
 export class ContactController {
 
     constructor(private contactService: ContactService) {}
+
+    @Get()
+    async list() {
+
+        return this.contactService.list();
+
+    }
 
     @Post()
     async create(
