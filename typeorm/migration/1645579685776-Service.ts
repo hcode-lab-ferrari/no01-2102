@@ -8,7 +8,7 @@ export class Service1645579685776 implements MigrationInterface {
             name: "services",
             columns: [
                 columnId,
-                columnVarchar("45"),
+                columnVarchar("name", false, "45"),
                 {
                     name: "description",
                     type: "mediumtext",

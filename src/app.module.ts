@@ -1,3 +1,4 @@
+import { AddressModule } from './address/address.module';
 import { TimeOptionModule } from './time-option/time-option.module';
 import { ContactModule } from './contact/contact.module';
 import { MailModule } from './mail/mail.module';
@@ -10,6 +11,7 @@ import { ServiceModule } from './service/service.module';
 
 @Module({
   imports: [
+    AddressModule,
     TimeOptionModule,
     ContactModule,
     MailModule,

@@ -1,11 +1,12 @@
 import { TableColumnOptions } from "typeorm";
 
-export function columnVarchar(length: string = "255") {
+export function columnVarchar(name: string = "name", canBeNull: boolean = false, length: string = "255") {
 
     return {
-        name: 'name',
+        name,
         type: 'varchar',
-        length
+        isNullable: canBeNull,
+        length,
     } as TableColumnOptions
 
 }
