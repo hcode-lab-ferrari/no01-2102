@@ -56,11 +56,11 @@ export class UserService {
       },
     });
 
-    delete user.password;
-
     if (!user) {
       throw new NotFoundException('User not found');
     }
+
+    delete user.password;
 
     return user;
   }

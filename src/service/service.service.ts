@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { isValidId } from 'utils/validation-id';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
 
@@ -7,18 +8,6 @@ import { UpdateServiceDto } from './dto/update-service.dto';
 export class ServiceService {
 
   constructor(private prisma: PrismaService){}
-
-  isValidId(id: number) {
-
-    id = Number(id);
-
-    if (isNaN(id)) {
-      throw new BadRequestException("ID is invalid");
-    }
-
-    return id;
-
-  }
 
   isValidData(data: CreateServiceDto | UpdateServiceDto) {
 
@@ -52,7 +41,7 @@ export class ServiceService {
   async findOne(id: number) {
     return this.prisma.services.findUnique({
       where: {
-        id: this.isValidId(id),
+        id: isValidId(id),
       },
     });
   }
@@ -61,7 +50,7 @@ export class ServiceService {
 
     return this.prisma.services.update({
       where: {
-        id: this.isValidId(id),
+        id: isValidId(id),
       },
       data: this.isValidData(data),
     });
@@ -75,7 +64,7 @@ export class ServiceService {
 
     return this.prisma.services.delete({
       where: {
-        id: this.isValidId(id),
+        id: isValidId(id),
       },
     });
   }

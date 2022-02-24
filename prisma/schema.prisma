@@ -14,15 +14,15 @@ model migrations {
 }
 
 model Person {
-  id        Int         @id @default(autoincrement())
-  name      String      @db.VarChar(250)
-  birthAt   DateTime?   @db.Date
-  phone     String?     @db.VarChar(16)
-  document  String?     @db.VarChar(14)
-  createdAt DateTime    @default(now()) @db.DateTime(0)
-  updatedAt DateTime    @default(now()) @db.DateTime(0)
-  Address Address[] @relation("addressesTopersons")
-  Contact   Contact[]   @relation("contactsTopersons")
+  id        Int       @id @default(autoincrement())
+  name      String    @db.VarChar(250)
+  birthAt   DateTime? @db.Date
+  phone     String?   @db.VarChar(16)
+  document  String?   @db.VarChar(14)
+  createdAt DateTime  @default(now()) @db.DateTime(0)
+  updatedAt DateTime  @default(now()) @db.DateTime(0)
+  Address   Address[] @relation("addressesTopersons")
+  Contact   Contact[] @relation("contactsTopersons")
   User      User[]
 
   @@map("persons")
@@ -105,4 +105,13 @@ model Address {
 
   @@index([personId], map: "FK_addresses_persons")
   @@map("addresses")
+}
+
+model PaymentSituation {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(45)
+  createdAt DateTime @default(now()) @db.DateTime(0)
+  updatedAt DateTime @default(now()) @db.DateTime(0)
+
+  @@map("payment_situations")
 }
