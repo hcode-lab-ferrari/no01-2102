@@ -1,4 +1,6 @@
+import { HttpService } from '@nestjs/axios';
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { lastValueFrom } from 'rxjs';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { isValidNumber } from 'utils/validation-number';
 import { CreateAddressDto } from './dto/create-address.dto';
@@ -7,7 +9,23 @@ import { UpdateAddressDto } from './dto/update-address.dto';
 @Injectable()
 export class AddressService {
 
-    constructor(private database: PrismaService) {}
+    constructor(
+        private database: PrismaService,
+        private httpService: HttpService,
+    ) {}
+
+    async searchCep(cep: string) {
+
+        cep = cep.replace(/[^\d]+/g, '').substring(0, 8);
+
+        const response = await lastValueFrom(this.httpService.request({
+            method: 'GET',
+            url: `https://viacep.com.br/ws/${cep}/json/`
+        }));
+
+        return response.data;
+
+    }
 
     async isValidPerson(id: number, personId: number) {
 
