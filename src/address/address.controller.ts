@@ -58,4 +58,9 @@ export class AddressController {
         return this.addressService.delete(id, user.personId);
     }
 
+    @Get('/cep/:cep')
+    async cep(@Param('cep') cep: string) {
+        return this.addressService.searchCep(cep);
+    }
+
 }
