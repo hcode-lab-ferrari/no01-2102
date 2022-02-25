@@ -14,15 +14,16 @@ model migrations {
 }
 
 model Person {
-  id        Int       @id @default(autoincrement())
-  name      String    @db.VarChar(250)
-  birthAt   DateTime? @db.Date
-  phone     String?   @db.VarChar(16)
-  document  String?   @db.VarChar(14)
-  createdAt DateTime  @default(now()) @db.DateTime(0)
-  updatedAt DateTime  @default(now()) @db.DateTime(0)
-  Address   Address[] @relation("addressesTopersons")
-  Contact   Contact[] @relation("contactsTopersons")
+  id        Int        @id @default(autoincrement())
+  name      String     @db.VarChar(250)
+  birthAt   DateTime?  @db.Date
+  phone     String?    @db.VarChar(16)
+  document  String?    @db.VarChar(14)
+  createdAt DateTime   @default(now()) @db.DateTime(0)
+  updatedAt DateTime   @default(now()) @db.DateTime(0)
+  Address   Address[]  @relation("addressesTopersons")
+  Contact   Contact[]  @relation("contactsTopersons")
+  Schedule  Schedule[] @relation("personsToschedules")
   User      User[]
 
   @@map("persons")
@@ -63,55 +64,96 @@ model Contact {
   message   String   @db.Text
   createdAt DateTime @default(now()) @db.DateTime(0)
   updatedAt DateTime @default(now()) @db.DateTime(0)
-  persons   Person   @relation("contactsTopersons", fields: [personId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_contacts_persons")
+  person    Person   @relation("contactsTopersons", fields: [personId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_contacts_persons")
 
   @@index([personId], map: "FK_contacts_persons")
   @@map("contacts")
 }
 
 model TimeOption {
-  id        Int      @id @default(autoincrement())
-  day       Int      @db.TinyInt
-  time      DateTime @db.Time(0)
-  createdAt DateTime @default(now()) @db.DateTime(0)
-  updatedAt DateTime @default(now()) @db.DateTime(0)
+  id        Int        @id @default(autoincrement())
+  day       Int        @db.TinyInt
+  time      DateTime   @db.Time(0)
+  createdAt DateTime   @default(now()) @db.DateTime(0)
+  updatedAt DateTime   @default(now()) @db.DateTime(0)
+  Schedule  Schedule[] @relation("schedulesTotime_options")
 
   @@map("time_options")
 }
 
 model services {
-  id          Int      @id @default(autoincrement())
-  name        String   @db.VarChar(45)
-  description String   @db.MediumText
-  price       Decimal  @db.Decimal(10, 2)
-  createdAt   DateTime @default(now()) @db.DateTime(0)
-  updatedAt   DateTime @default(now()) @db.DateTime(0)
+  id              Int               @id @default(autoincrement())
+  name            String            @db.VarChar(45)
+  description     String            @db.MediumText
+  price           Decimal           @db.Decimal(10, 2)
+  createdAt       DateTime          @default(now()) @db.DateTime(0)
+  updatedAt       DateTime          @default(now()) @db.DateTime(0)
+  ScheduleService ScheduleService[]
 }
 
 model Address {
-  id         Int      @id @default(autoincrement())
-  street     String   @db.VarChar(255)
-  number     String?  @db.VarChar(16)
-  complement String?  @db.VarChar(255)
-  district   String   @db.VarChar(255)
-  city       String   @db.VarChar(255)
-  state      String   @db.VarChar(255)
-  country    String   @db.VarChar(255)
-  zipcode    String   @db.VarChar(8)
+  id         Int        @id @default(autoincrement())
+  street     String     @db.VarChar(255)
+  number     String?    @db.VarChar(16)
+  complement String?    @db.VarChar(255)
+  district   String     @db.VarChar(255)
+  city       String     @db.VarChar(255)
+  state      String     @db.VarChar(255)
+  country    String     @db.VarChar(255)
+  zipcode    String     @db.VarChar(8)
   personId   Int
-  createdAt  DateTime @default(now()) @db.DateTime(0)
-  updatedAt  DateTime @default(now()) @db.DateTime(0)
-  persons    Person   @relation("addressesTopersons", fields: [personId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_addresses_persons")
+  createdAt  DateTime   @default(now()) @db.DateTime(0)
+  updatedAt  DateTime   @default(now()) @db.DateTime(0)
+  person     Person     @relation("addressesTopersons", fields: [personId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_addresses_persons")
+  Schedule   Schedule[] @relation("addressesToschedules")
 
   @@index([personId], map: "FK_addresses_persons")
   @@map("addresses")
 }
 
 model PaymentSituation {
-  id        Int      @id @default(autoincrement())
-  name      String   @db.VarChar(45)
-  createdAt DateTime @default(now()) @db.DateTime(0)
-  updatedAt DateTime @default(now()) @db.DateTime(0)
+  id        Int        @id @default(autoincrement())
+  name      String     @db.VarChar(45)
+  createdAt DateTime   @default(now()) @db.DateTime(0)
+  updatedAt DateTime   @default(now()) @db.DateTime(0)
+  Schedule  Schedule[] @relation("payment_situationsToschedules")
 
   @@map("payment_situations")
+}
+
+model Schedule {
+  id                 Int               @id @default(autoincrement())
+  personId           Int
+  timeOptionId       Int
+  paymentSituationId Int
+  billingAddressId   Int
+  scheduleAt         DateTime          @db.DateTime(0)
+  total              Decimal           @default(0.00) @db.Decimal(10, 2)
+  installments       Int               @default(1) @db.TinyInt
+  createdAt          DateTime          @default(now()) @db.DateTime(0)
+  updatedAt          DateTime          @default(now()) @db.DateTime(0)
+  address            Address           @relation("addressesToschedules", fields: [billingAddressId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_schedules_addresses")
+  paymentSituation   PaymentSituation  @relation("payment_situationsToschedules", fields: [paymentSituationId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_schedules_payment_situations")
+  person             Person            @relation("personsToschedules", fields: [personId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_schedules_persons")
+  timeOption         TimeOption        @relation("schedulesTotime_options", fields: [timeOptionId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_schedules_time_options")
+  ScheduleService    ScheduleService[] @relation("schedule_servicesToschedules")
+
+  @@index([billingAddressId], map: "FK_schedules_addresses")
+  @@index([paymentSituationId], map: "FK_schedules_payment_situations")
+  @@index([personId], map: "FK_schedules_persons")
+  @@index([timeOptionId], map: "FK_schedules_time_options")
+  @@map("schedules")
+}
+
+model ScheduleService {
+  scheduleId Int
+  serviceId  Int
+  createdAt  DateTime @default(now()) @db.DateTime(0)
+  updatedAt  DateTime @default(now()) @db.DateTime(0)
+  schedules  Schedule @relation("schedule_servicesToschedules", fields: [scheduleId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_schedule_services_schedules")
+  services   services @relation(fields: [serviceId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_schedule_services_services")
+
+  @@id([scheduleId, serviceId])
+  @@index([serviceId], map: "FK_schedule_services_services")
+  @@map("schedule_services")
 }

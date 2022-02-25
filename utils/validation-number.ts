@@ -1,11 +1,11 @@
 import { BadRequestException } from "@nestjs/common";
 
-export const isValidId = (id: number) => {
+export const isValidNumber = (id: number, message: string = "ID is invalid.") => {
         
     id = Number(id);
 
     if (isNaN(id)) {
-        throw new BadRequestException("ID is invalid.");
+        throw new BadRequestException(message);
     }
 
     return id;

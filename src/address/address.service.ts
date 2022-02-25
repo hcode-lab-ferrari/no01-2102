@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { isValidId } from 'utils/validation-id';
+import { isValidNumber } from 'utils/validation-number';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { UpdateAddressDto } from './dto/update-address.dto';
 
@@ -11,9 +11,9 @@ export class AddressService {
 
     async isValidPerson(id: number, personId: number) {
 
-        personId = isValidId(personId);
+        personId = isValidNumber(personId);
 
-        const address = await this.findOne(isValidId(id));
+        const address = await this.findOne(isValidNumber(id));
 
         if (address.personId !== personId) {
             throw new BadRequestException("Operation is invalid.");
@@ -31,7 +31,7 @@ export class AddressService {
 
         return this.database.address.findUnique({
             where: {
-                id: isValidId(id),
+                id: isValidNumber(id),
             },
         });
 
@@ -41,7 +41,7 @@ export class AddressService {
 
         return this.database.address.findMany({
             where: {
-                personId: isValidId(personId),
+                personId: isValidNumber(personId),
             }
         })
 
@@ -71,7 +71,7 @@ export class AddressService {
         return this.database.address.update({
             data: dataUpdate,
             where: {
-                id: isValidId(id),
+                id: isValidNumber(id),
             },
         });
 
@@ -83,7 +83,7 @@ export class AddressService {
 
         return this.database.address.delete({
             where: {
-                id: isValidId(id),
+                id: isValidNumber(id),
             },
         });
 

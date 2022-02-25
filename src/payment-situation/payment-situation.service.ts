@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { isValidId } from 'utils/validation-id';
+import { isValidNumber } from 'utils/validation-number';
 import { CreatePaymentSituationDto } from './dto/create-payment-situation.dto';
 import { UpdatePaymentSituationDto } from './dto/update-payment-situation.dto';
 
@@ -22,7 +22,7 @@ export class PaymentSituationService {
   findOne(id: number) {
     return this.prismaService.paymentSituation.findUnique({
       where: {
-        id: isValidId(id),
+        id: isValidNumber(id),
       },
     });
   }
@@ -31,7 +31,7 @@ export class PaymentSituationService {
     return this.prismaService.paymentSituation.update({
       data: updatePaymentSituationDto,
       where: {
-        id: isValidId(id),
+        id: isValidNumber(id),
       },
     });
   }
@@ -39,7 +39,7 @@ export class PaymentSituationService {
   remove(id: number) {
     return this.prismaService.paymentSituation.delete({
       where: {
-        id: isValidId(id),
+        id: isValidNumber(id),
       },
     });
   }

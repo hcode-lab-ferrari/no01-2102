@@ -1,3 +1,4 @@
+import { ScheduleModule } from './schedule/schedule.module';
 import { AddressModule } from './address/address.module';
 import { TimeOptionModule } from './time-option/time-option.module';
 import { ContactModule } from './contact/contact.module';
@@ -21,6 +22,7 @@ import { PaymentSituationModule } from './payment-situation/payment-situation.mo
     PrismaModule,
     ServiceModule,
     PaymentSituationModule,
+    ScheduleModule,
   ],
   controllers: [AppController],
   providers: [],
