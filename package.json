@@ -28,10 +28,12 @@
     "migrate:down": "ts-node --transpile-only ./node_modules/typeorm/cli.js migration:revert",
     "postmigrate:down": "npm run prisma:update",
     "git": "git add --all && git commit -m \"nova versao\"",
+    "git:pull": "git fetch --all && git reset --hard origin/master && git pull origin master",
     "new:version": "npm version patch",
     "preprod": "npm run git",
     "prod": "npm run build",
-    "postprod": "npm run new:version && git push origin master"
+    "postprod": "npm run new:version && git push origin master",
+    "env": "cp ../.env ./.env"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^1.6.1",
