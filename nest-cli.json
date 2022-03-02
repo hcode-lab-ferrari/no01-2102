@@ -10,8 +10,5 @@
     ],
     "watchAssets": true,
     "webpack": true
-  },
-  "projects": {
-    
   }
 }

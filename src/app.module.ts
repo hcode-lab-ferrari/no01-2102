@@ -10,14 +10,12 @@ import { AppController } from './app.controller';
 import { PrismaModule } from './prisma/prisma.module';
 import { ServiceModule } from './service/service.module';
 import { PaymentSituationModule } from './payment-situation/payment-situation.module';
-import { HcodeContactModule } from 'hcode-contact';
 
 @Module({
     imports: [
         PaymentModule,
         AddressModule,
         TimeOptionModule,
-        HcodeContactModule,
         MailModule,
         AuthModule,
         UserModule,
