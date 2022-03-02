@@ -4,6 +4,6 @@ import { Controller, Get } from '@nestjs/common';
 export class AppController {
     @Get()
     getHello(): string {
-        return 'Ferrari API 3';
+        return 'Ferrari API 4';
     }
 }
