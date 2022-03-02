@@ -12,14 +12,6 @@
     "webpack": true
   },
   "projects": {
-    "hcode-contact": {
-      "type": "library",
-      "root": "libs/hcode-contact",
-      "entryFile": "index",
-      "sourceRoot": "libs/hcode-contact/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/hcode-contact/tsconfig.lib.json"
-      }
-    }
+    
   }
 }

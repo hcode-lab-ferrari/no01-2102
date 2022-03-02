@@ -17,14 +17,6 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false,
-    "paths": {
-      "@app/hcode-contact": [
-        "libs/hcode-contact/src"
-      ],
-      "@app/hcode-contact/*": [
-        "libs/hcode-contact/src/*"
-      ]
-    }
+    "noFallthroughCasesInSwitch": false
   }
 }
