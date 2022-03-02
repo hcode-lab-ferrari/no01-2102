@@ -5,6 +5,7 @@ import { PrismaModule } from 'src/prisma/prisma.module';
 import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from 'src/user/user.module';
 import { AuthModule } from 'src/auth/auth.module';
+import { ScheduleGateway } from './schedule.gateway';
 
 @Module({
     imports: [
@@ -25,6 +26,7 @@ import { AuthModule } from 'src/auth/auth.module';
     ],
     providers: [
         ScheduleService,
+        ScheduleGateway,
     ],
 })
 export class ScheduleModule { }

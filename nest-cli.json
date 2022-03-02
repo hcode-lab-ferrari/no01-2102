@@ -2,10 +2,24 @@
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",
   "compilerOptions": {
-    "assets":[{
-      "include": "mail/templates/**/*",
-      "outDir": "dist/src"
-    }],
-    "watchAssets": true
+    "assets": [
+      {
+        "include": "mail/templates/**/*",
+        "outDir": "dist/src"
+      }
+    ],
+    "watchAssets": true,
+    "webpack": true
+  },
+  "projects": {
+    "hcode-contact": {
+      "type": "library",
+      "root": "libs/hcode-contact",
+      "entryFile": "index",
+      "sourceRoot": "libs/hcode-contact/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/hcode-contact/tsconfig.lib.json"
+      }
+    }
   }
 }
