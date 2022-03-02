@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "pm2:start": "pm2 start npm --name api run start:prod",
+    "pm2:start": "pm2 start npm --name api -- run start:prod",
     "clear:dist": "rimraf dist",
     "prebuild": "npm run format && npm run lint && npm run clear:dist",
     "build": "nest build",
