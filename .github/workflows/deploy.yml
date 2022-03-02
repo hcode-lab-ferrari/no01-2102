@@ -1,0 +1,66 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Baixando atualizações do GitHub
+      uses: joaohcrangel/github-action-ssh@release
+      with:
+          command: cd /var/www/no01-2102 && npm run git:pull
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          passphrase: ${{ secrets.SSH_PASS }}
+          privateKey: ${{ secrets.SSH_KEY}}
+          
+    - name: Copia o arquivo .env
+      uses: joaohcrangel/github-action-ssh@release
+      with:
+          command: cd /var/www/no01-2102 && npm run env
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          passphrase: ${{ secrets.SSH_PASS }}
+          privateKey: ${{ secrets.SSH_KEY}}
+      
+    - name: Executa os migrations
+      uses: joaohcrangel/github-action-ssh@release
+      with:
+          command: cd /var/www/no01-2102 && npm run migrate:up
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          passphrase: ${{ secrets.SSH_PASS }}
+          privateKey: ${{ secrets.SSH_KEY}}
+          
+    - name: Instala as dependencias
+      uses: joaohcrangel/github-action-ssh@release
+      with:
+          command: cd /var/www/no01-2102 && npm install
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          passphrase: ${{ secrets.SSH_PASS }}
+          privateKey: ${{ secrets.SSH_KEY}}
+          
+    - name: Executa o Build
+      uses: joaohcrangel/github-action-ssh@release
+      with:
+          command: cd /var/www/no01-2102 && npm run build
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          passphrase: ${{ secrets.SSH_PASS }}
+          privateKey: ${{ secrets.SSH_KEY}}
+          
+    - name: Reinicia a aplicação no PM2
+      uses: joaohcrangel/github-action-ssh@release
+      with:
+          command: cd /var/www/no01-2102 && pm2 restart api
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          passphrase: ${{ secrets.SSH_PASS }}
+          privateKey: ${{ secrets.SSH_KEY}}
