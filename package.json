@@ -31,9 +31,7 @@
     "new:version": "npm version patch",
     "preprod": "npm run git",
     "prod": "npm run build",
-    "git:prod": "git checkout -B production",
-    "postgit:prod": "git merge master && npm run new:version && npm run git",
-    "postprod": "npm run git:prod && git push origin production && git checkout master"
+    "postprod": "npm run new:version && git push origin master"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^1.6.1",
