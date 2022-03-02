@@ -3,12 +3,8 @@ import { Module } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
 
 @Module({
-    imports: [
-        HttpModule,
-    ],
+    imports: [HttpModule],
     controllers: [],
-    providers: [
-        PaymentService,
-    ],
+    providers: [PaymentService],
 })
-export class PaymentModule { }
+export class PaymentModule {}

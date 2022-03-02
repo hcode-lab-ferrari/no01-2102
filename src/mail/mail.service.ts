@@ -3,28 +3,28 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class MailService {
-  constructor(private mailerService: MailerService) {}
+    constructor(private mailerService: MailerService) {}
 
-  async send({
-    to,
-    subject,
-    template,
-    data,
-  }: {
-    to: string;
-    subject: string;
-    template: string;
-    data: any;
-  }) {
-    try {
-      return this.mailerService.sendMail({
+    async send({
         to,
         subject,
         template,
-        context: data,
-      });
-    } catch (e) {
-      throw new BadRequestException(e.message);
+        data,
+    }: {
+        to: string;
+        subject: string;
+        template: string;
+        data: any;
+    }) {
+        try {
+            return this.mailerService.sendMail({
+                to,
+                subject,
+                template,
+                context: data,
+            });
+        } catch (e) {
+            throw new BadRequestException(e.message);
+        }
     }
-  }
 }

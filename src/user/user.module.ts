@@ -6,9 +6,9 @@ import { MailModule } from 'src/mail/mail.module';
 import { PasswordService } from './password.service';
 
 @Module({
-  imports: [PrismaModule, MailModule],
-  controllers: [UserController],
-  providers: [UserService, PasswordService],
-  exports: [UserService, PasswordService],
+    imports: [PrismaModule, MailModule],
+    controllers: [UserController],
+    providers: [UserService, PasswordService],
+    exports: [UserService, PasswordService],
 })
 export class UserModule {}

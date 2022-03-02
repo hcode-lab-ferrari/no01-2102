@@ -11,22 +11,18 @@ import { HttpModule } from '@nestjs/axios';
     imports: [
         JwtModule.registerAsync({
             useFactory: () => ({
-              secret: process.env.JWT_SECRET,
-              signOptions: {
-                expiresIn: Number(process.env.JWT_EXPIRE),
-              },
+                secret: process.env.JWT_SECRET,
+                signOptions: {
+                    expiresIn: Number(process.env.JWT_EXPIRE),
+                },
             }),
         }),
-        PrismaModule,        
+        PrismaModule,
         UserModule,
         AuthModule,
-        HttpModule
+        HttpModule,
     ],
-    controllers: [
-        AddressController,
-    ],
-    providers: [
-        AddressService,        
-    ],
+    controllers: [AddressController],
+    providers: [AddressService],
 })
-export class AddressModule { }
+export class AddressModule {}

@@ -1,13 +1,22 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    ParseIntPipe,
+    Patch,
+    Post,
+    UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { User } from 'src/user/user.decorator';
 import { AddressService } from './address.service';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { UpdateAddressDto } from './dto/update-address.dto';
 
-@Controller("addresses")
+@Controller('addresses')
 export class AddressController {
-
     constructor(private addressService: AddressService) {}
 
     @UseGuards(AuthGuard)
@@ -18,9 +27,7 @@ export class AddressController {
 
     @UseGuards(AuthGuard)
     @Get('my-addresses')
-    async listByPerson(
-        @User() user,
-    ) {
+    async listByPerson(@User() user) {
         return this.addressService.findByPerson(user.personId);
     }
 
@@ -32,10 +39,7 @@ export class AddressController {
 
     @UseGuards(AuthGuard)
     @Post()
-    async createAddress(
-        @Body() data: CreateAddressDto,
-        @User() user,
-    ) {
+    async createAddress(@Body() data: CreateAddressDto, @User() user) {
         return this.addressService.create(user.personId, data);
     }
 
@@ -51,10 +55,7 @@ export class AddressController {
 
     @UseGuards(AuthGuard)
     @Delete(':id')
-    async deleteAddress(
-        @Param('id', ParseIntPipe) id: number,
-        @User() user,
-    ) {
+    async deleteAddress(@Param('id', ParseIntPipe) id: number, @User() user) {
         return this.addressService.delete(id, user.personId);
     }
 
@@ -62,5 +63,4 @@ export class AddressController {
     async cep(@Param('cep') cep: string) {
         return this.addressService.searchCep(cep);
     }
-
 }

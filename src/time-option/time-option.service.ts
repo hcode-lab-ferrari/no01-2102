@@ -3,23 +3,13 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class TimeOptionService {
-
     constructor(private prisma: PrismaService) {}
 
     async listTimeOptions() {
-
         return this.prisma.timeOption.findMany();
-
     }
 
-    async createTimeOption({
-        day,
-        time,
-    }: {
-        day: number;
-        time: string;
-    }) {
-
+    async createTimeOption({ day, time }: { day: number; time: string }) {
         day = Number(day);
 
         if (day < 0 || day > 6 || isNaN(day)) {
@@ -57,7 +47,5 @@ export class TimeOptionService {
                 time: timeDate,
             },
         });
-
     }
-
 }

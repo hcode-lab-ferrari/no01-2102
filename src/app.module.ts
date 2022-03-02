@@ -10,23 +10,23 @@ import { AppController } from './app.controller';
 import { PrismaModule } from './prisma/prisma.module';
 import { ServiceModule } from './service/service.module';
 import { PaymentSituationModule } from './payment-situation/payment-situation.module';
-import { HcodeContactModule } from 'libs/hcode-contact/src';
+import { HcodeContactModule } from 'hcode-contact';
 
 @Module({
-  imports: [
-    PaymentModule,
-    AddressModule,
-    TimeOptionModule,
-    HcodeContactModule,
-    MailModule,
-    AuthModule,
-    UserModule,
-    PrismaModule,
-    ServiceModule,
-    PaymentSituationModule,
-    ScheduleModule,
-  ],
-  controllers: [AppController],
-  providers: [],
+    imports: [
+        PaymentModule,
+        AddressModule,
+        TimeOptionModule,
+        HcodeContactModule,
+        MailModule,
+        AuthModule,
+        UserModule,
+        PrismaModule,
+        ServiceModule,
+        PaymentSituationModule,
+        ScheduleModule,
+    ],
+    controllers: [AppController],
+    providers: [],
 })
-export class AppModule { }
+export class AppModule {}

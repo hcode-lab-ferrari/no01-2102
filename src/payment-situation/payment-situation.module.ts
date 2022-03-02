@@ -7,20 +7,20 @@ import { AuthModule } from 'src/auth/auth.module';
 import { UserModule } from 'src/user/user.module';
 
 @Module({
-  imports: [
-    JwtModule.registerAsync({
-      useFactory: () => ({
-        secret: process.env.JWT_SECRET,
-        signOptions: {
-          expiresIn: Number(process.env.JWT_EXPIRE),
-        },
-      }),
-    }),
-    AuthModule,
-    UserModule,
-    PrismaModule,
-  ],
-  controllers: [PaymentSituationController],
-  providers: [PaymentSituationService]
+    imports: [
+        JwtModule.registerAsync({
+            useFactory: () => ({
+                secret: process.env.JWT_SECRET,
+                signOptions: {
+                    expiresIn: Number(process.env.JWT_EXPIRE),
+                },
+            }),
+        }),
+        AuthModule,
+        UserModule,
+        PrismaModule,
+    ],
+    controllers: [PaymentSituationController],
+    providers: [PaymentSituationService],
 })
 export class PaymentSituationModule {}

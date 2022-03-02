@@ -7,7 +7,8 @@
   "license": "UNLICENSED",
   "scripts": {
     "pm2:start": "pm2 start npm --name api run start:prod",
-    "prebuild": "rimraf dist",
+    "clear:dist": "rimraf dist",
+    "prebuild": "npm run format && npm run lint && npm run test && npm run clear:dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
@@ -25,7 +26,13 @@
     "migrate:up": "ts-node --transpile-only ./node_modules/typeorm/cli.js migration:run",
     "postmigrate:up": "npm run prisma:update",
     "migrate:down": "ts-node --transpile-only ./node_modules/typeorm/cli.js migration:revert",
-    "postmigrate:down": "npm run prisma:update"
+    "postmigrate:down": "npm run prisma:update",
+    "git": "git add --all && git commit -m \"nova versao\"",
+    "postgit": "npm run new:version",
+    "new:version": "npm version patch",
+    "preprod": "npm run git",
+    "prod": "npm run build",
+    "postprod": "git checkout -B production && git merge master && git add --all && git commit -m \"nova versao\" && git push origin production && git checkout master"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^1.6.1",
@@ -42,6 +49,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "date-fns": "^2.28.0",
+    "hcode-contact": "^1.1.1",
     "mysql2": "^2.3.3",
     "nodemailer": "^6.7.2",
     "pug": "^3.0.2",

@@ -1,5 +1,1 @@
-export class Service {
-
-  
-
-}
+export class Service {}
