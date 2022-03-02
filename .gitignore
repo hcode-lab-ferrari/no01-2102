@@ -36,5 +36,4 @@ lerna-debug.log*
 
 .env.production
 
-libs
-libs/hcode-contact
+/libs
