@@ -103,11 +103,7 @@
     "coverageDirectory": "./coverage",
     "testEnvironment": "node",
     "roots": [
-      "<rootDir>/src/",
-      "<rootDir>/libs/"
-    ],
-    "moduleNameMapper": {
-      "^@app/hcode-contact(|/.*)$": "<rootDir>/libs/hcode-contact/src/$1"
-    }
+      "<rootDir>/src/"
+    ]
   }
 }
